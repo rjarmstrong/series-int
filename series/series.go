@@ -17,9 +17,9 @@ func (sb *Int16) Incr(i int) {
 	if (*sb)[(i*2)+1] == 255 {
 		(*sb)[(i*2)+1] = 0
 		(*sb)[i*2] += 1
-	} else {
-		(*sb)[(i*2)+1] += 1
+		return
 	}
+	(*sb)[(i*2)+1] += 1
 }
 
 func (sb Int16) Val(i int) uint16 {
