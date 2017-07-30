@@ -3,19 +3,19 @@ package test
 import (
 	"fmt"
 	"github.com/bmizerany/assert"
-	"github.com/rjarmstrong/series-int/types"
+	"github.com/rjarmstrong/series-int/series"
 	"math/big"
 	"testing"
 )
 
 func Test_SeriesInt(t *testing.T) {
-	i := types.NewInt16()
+	i := series.NewInt16(60)
 	i.Set(0, 512)
 	i.Set(1, 255)
 	i.Set(30, 200)
 	assert.Equal(t, uint16(512), i.Val(0))
 	fmt.Println(i)
-	j := types.NewInt16()
+	j := series.NewInt16(60)
 	j.Set(0, 666)
 	j.Set(1, 1)
 	j.Set(30, 111)
@@ -33,9 +33,9 @@ func Test_SeriesInt(t *testing.T) {
 }
 
 func BenchmarkSeriesInt16_Add(b *testing.B) {
-	i := types.NewInt16()
+	i := series.NewInt16(60)
 	i.Set(0, 512)
-	j := types.NewInt16()
+	j := series.NewInt16(60)
 	j.Set(0, 666)
 	for n := 0; n < b.N; n++ {
 		i.Add(&j)
@@ -59,7 +59,7 @@ func BenchmarkBigNum_Add(b *testing.B) {
 }
 
 func BenchmarkSeriesInt16_Get(b *testing.B) {
-	i := types.NewInt16()
+	i := series.NewInt16(60)
 	i.Set(0, 512)
 	for n := 0; n < b.N; n++ {
 		i.Val(0)
