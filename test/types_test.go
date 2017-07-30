@@ -30,6 +30,8 @@ func Test_SeriesInt(t *testing.T) {
 	i.Incr(30)
 	i.Incr(31)
 	fmt.Println(i)
+	i.AddRange(1, 10, 513)
+	fmt.Println(i)
 }
 
 func BenchmarkSeriesInt16_Add(b *testing.B) {

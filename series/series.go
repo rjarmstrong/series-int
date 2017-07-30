@@ -13,7 +13,7 @@ func NewInt16(periods int) Int16 {
 
 type Int16 []byte
 
-func (sb *Int16) Incr(i int) {
+func (sb *Int16) Incr(i uint16) {
 	if (*sb)[(i*2)+1] == 255 {
 		(*sb)[(i*2)+1] = 0
 		(*sb)[i*2] += 1
@@ -45,6 +45,20 @@ func (sb *Int16) Add(sb2 *Int16) error {
 		}
 	}
 	return nil
+}
+
+func (sb *Int16) AddRange(i int, i2 int, value uint16) {
+	for i <= i2 {
+		unit := uint16((*sb)[(i*2)+1]) + (value % 256)
+		if unit > 255 {
+			(*sb)[i*2] += 1
+			(*sb)[(i*2)+1] += uint8(unit % 256)
+		} else {
+			(*sb)[i*2] += uint8(value >> 8)
+			(*sb)[(i*2)+1] += uint8(unit)
+		}
+		i++
+	}
 }
 
 func (sb *Int16) Set(i int, value uint16) error {
