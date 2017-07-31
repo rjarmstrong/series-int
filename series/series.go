@@ -13,6 +13,10 @@ func NewInt16(periods int) Int16 {
 
 type Int16 []byte
 
+func (sb *Int16) Periods() int {
+	return len(*sb) / 2
+}
+
 func (sb *Int16) Incr(i uint16) {
 	if (*sb)[(i*2)+1] == 255 {
 		(*sb)[(i*2)+1] = 0

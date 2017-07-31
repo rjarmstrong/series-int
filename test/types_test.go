@@ -10,6 +10,7 @@ import (
 
 func Test_SeriesInt(t *testing.T) {
 	i := series.NewInt16(60)
+	assert.Equal(t, 60, i.Periods())
 	i.Set(0, 512)
 	i.Set(1, 255)
 	i.Set(30, 200)
@@ -32,6 +33,7 @@ func Test_SeriesInt(t *testing.T) {
 	fmt.Println(i)
 	i.AddRange(1, 10, 513)
 	fmt.Println(i)
+	fmt.Printf("%x", []uint8(i))
 }
 
 func BenchmarkSeriesInt16_Add(b *testing.B) {
