@@ -41,6 +41,18 @@ func BenchmarkSeriesInt16_Add(b *testing.B) {
 	i.Set(0, 512)
 	j := series.NewInt16(60)
 	j.Set(0, 666)
+	b.ReportAllocs()
+	for n := 0; n < b.N; n++ {
+		i.Add(&j)
+	}
+}
+
+func BenchmarkSeriesInt1664_Add(b *testing.B) {
+	i := series.NewInt1664(60)
+	i.Set(0, 512)
+	j := series.NewInt1664(60)
+	j.Set(0, 666)
+	b.ReportAllocs()
 	for n := 0; n < b.N; n++ {
 		i.Add(&j)
 	}
