@@ -43,15 +43,15 @@ func (sb *Int1664) Set(i int, value uint16) error {
 	if value > 65535 {
 		return errors.New("Value is greater than a SeriesInt16 can handle")
 	}
-	ix := 64 / 4
-	// int index
-	seg := (*sb)[i/ix]
+	// chunk index
+	chunkIx := i / 4
+	seg := (*sb)[chunkIx]
 	// bit offset
-	shift := (*sb)[i/ix]
+	shift := uint8(i % chunkIx)
 	// clear
 	seg &^= 0x1111111111111111 << shift
 	// set
-	(*sb)[i/ix] |= uint64(value << shift)
+	(*sb)[chunkIx] |= uint64(value << shift)
 	return nil
 }
 
