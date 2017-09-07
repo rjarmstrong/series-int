@@ -2,8 +2,8 @@ package series
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
 	"strings"
 )
 

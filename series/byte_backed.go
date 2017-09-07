@@ -2,8 +2,8 @@ package series
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
 	"strings"
 )
 
@@ -32,7 +32,7 @@ func (sb Int16) Val(i int) uint16 {
 
 func (sb *Int16) Add(sb2 *Int16) error {
 	if len(*sb) != len(*sb2) {
-		return errors.New("Can't add two unequal series integers")
+		return errors.New("can't add two unequal series integers")
 	}
 	for i := 0; i < len(*sb); i += 2 {
 		if (*sb2)[i] > 0 {
@@ -51,10 +51,13 @@ func (sb *Int16) Add(sb2 *Int16) error {
 	return nil
 }
 
+// deprecated : TASK: this does not add correctly
 func (sb *Int16) AddRange(i int, i2 int, value uint16) {
 	for i <= i2 {
-		unit := uint16((*sb)[(i*2)+1]) + (value % 256)
-		if unit > 255 {
+		unit := uint16((*sb)[(i*2)+1])
+		newUnit := unit + (value % 256)
+		fmt.Println(unit, newUnit)
+		if newUnit > 255 {
 			(*sb)[i*2] += 1
 			(*sb)[(i*2)+1] += uint8(unit % 256)
 		} else {
@@ -67,7 +70,7 @@ func (sb *Int16) AddRange(i int, i2 int, value uint16) {
 
 func (sb *Int16) Set(i int, value uint16) error {
 	if value > 65535 {
-		return errors.New("Value is greater than a SeriesInt16 can handle")
+		return errors.New("value is greater than a SeriesInt16 can handle")
 	}
 	if value < 256 {
 		(*sb)[(i*2)+1] = uint8(value)

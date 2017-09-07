@@ -34,6 +34,8 @@ func Test_SeriesInt(t *testing.T) {
 	i.AddRange(1, 10, 513)
 	fmt.Println(i)
 	fmt.Printf("%x", []uint8(i))
+	i.AddRange(1, 10, 513)
+	fmt.Printf("%x", []uint8(i))
 }
 
 func BenchmarkSeriesInt16_Add(b *testing.B) {
